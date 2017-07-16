@@ -1,0 +1,191 @@
+<!--This Page is taken from Codepen.io-->
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title>FitTech-Login | Signup</title>
+    
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+    
+        <style>
+            body
+            {
+              background-image: url("login_signup.jpg");
+              background-repeat: no-repeat;
+              background-size: cover;
+              font-size: 25px;
+              font-family: 'Raleway', 'arial';
+              font-weight: 100; 
+            }
+
+            @media screen and (max-width: 1300px) 
+            {
+              body {
+                background-size: auto;
+              }
+            }
+
+            #container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+
+            #logo_bar {
+              background: rgba(0, 0, 0, 0.8);
+              width: 600px;
+              color: white;
+              margin-bottom: 15px;
+              padding: 10px;
+              text-align: center;
+              border-radius: 50px;
+            }
+
+            #logo {
+              max-width: 60px;
+              max-height: 60px;
+              vertical-align: middle;
+            }
+
+            #form_box {
+              background: rgba(0, 0, 0, 0.8);
+              width: 300px;
+              height: 400px;
+              text-align: center;
+              border-radius: 30px;
+            }
+
+            #form_heading {
+              color: #fff;
+              padding: 10px 0 0 0 ;         
+              font-family: 'Raleway', 'arial';
+              font-weight: 400;
+              font-size: 1.5em;
+            }
+
+            #font_20 {
+              font-size: 15px;
+            }
+
+            input {
+              background: none;
+              -webkit-transition: all 0.30s ease-in-out;
+              -moz-transition: all 0.30s ease-in-out;
+              -ms-transition: all 0.30s ease-in-out;
+              -o-transition: all 0.30s ease-in-out;
+              outline: none;
+              padding: 10px;
+              margin: 5px;
+              border: 2px solid #DDDDDD;
+              color: white;
+              font-family: 'Raleway', 'arial';
+              font-weight: 100;
+              font-size: 20px;
+            }
+
+            input:focus {
+              box-shadow: 0 0 50px rgba(255, 255, 255, 1);
+              padding: 10px;
+              margin: 10px;
+              border: 1px solid rgba(255, 255, 255, 1);
+            }
+
+            input[type=submit]:hover {
+              cursor: pointer;
+            }
+
+            a {
+              text-decoration: none;
+              color: azure;
+              cursor: pointer;
+            }
+
+            a:hover {
+              text-decoration: underline;
+            }
+    </style>
+</head>
+  <body>
+    <div id="container">
+      <div id="logo_bar">
+        <img id="logo" src="logo.png" alt="logo"> <span>FitTech - Login | Signup</span>
+      </div>
+      <div id="form_box"; style="float:left">
+        <div>
+          <p id="form_heading">Login</p>
+          <input type="email" placeholder="Email" id="txtEmail"><br />
+          <input type="password" placeholder="Password" id="txtPassword"><br />
+          <input type="checkbox" id="checkbox"><label for="checkbox" style="color:white; font-size:15px;">Remember Me</label><br />
+          <input type="submit" value="Login" id="btnLogin"><br />
+          <a id="font_20">Forgot your Password?</a><br /><br />
+          </div>
+      </div>
+        <div id="form_box"; style="float:right">
+        <div>
+          <p id="form_heading">Signup</p>
+          <input type="email" placeholder="Email" id="txtEmail"><br />
+          <input type="password" placeholder="Password" id="txtPassword"><br />
+          <input type="password" placeholder="Confirm Password" id="confPassword"><br />
+          <input type="submit" value="Signup" id="btnSignup"><br />
+            </div>
+      </div>
+        
+    </div>
+      
+      
+      <!--JavaScript-->
+      <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+      <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyDq72_Y-_O7xc2p-1PVWSj1O93JCWOSwjg",
+            authDomain: "fittech-85a55.firebaseapp.com",
+            databaseURL: "https://fittech-85a55.firebaseio.com",
+            projectId: "fittech-85a55",
+            storageBucket: "fittech-85a55.appspot.com",
+            messagingSenderId: "297156251548"
+          };
+          firebase.initializeApp(config);
+    
+    //Get elements
+    const  txtEmail = document.getElementById('txtEmail');
+    const  txtPassword = document.getElementById('txtPassword');
+    const  btnLogin = document.getElementById('btnLogin');
+    const  btnSignup = document.getElementById('btnSignup');
+    
+    //Add login Click event
+    btnLogin.addEventListener('click',e=>{
+       //Get Email and Password
+        const email = txtEmail.value;
+        const pass = txtPassword.value;
+        const auth = firebase.auth();
+        //Sign in
+        const promise = auth.signInWithEmailAndPassword(email, pass);
+        promise.catch(e=> console.log(e.message));
+    });
+    
+    //Add signup event
+    btnSignup.addEventListener('click',e=>{
+       //Get Email and Password
+        const email = txtEmail.value;
+        const pass = txtPassword.value;
+        const confirmpass = confPassword.value;
+        const auth = firebase.auth();
+        //Sign in
+        const promise = auth.createUserWithEmailAndPassword(email, pass);
+        promise.catch(e=> console.log(e.message));
+    });
+    
+    //Add a realtime auth listener
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+       if(firebaseUser){
+           console.log(firebaseUser);
+       } 
+        else{
+            console.log('not logged in'); 
+        }
+    });
+      </script>
+  </body>
+  </html>
